@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Cadastro Pessoa</h1>
+<a href="/">Voltar</a>
+
+<form action="salvarpessoa" method="post">
+	<label>Nome</label>
+	<input type="text" name="nome"/><br>
+	<label>Sobrenome</label>
+	<input type="text" name="sobrenome"/><br>
+	<label>Idade</label>
+	<input type="text" name="idade"/><br>
+	<input type="submit" value="Salvar">
+</form>
+
+
+<table>
+	<tr th:each="p : ${pessoas}">
+		<td th:text="${p.nome}"></td>
+		<td th:text="${p.sobrenome}"></td>
+		<td th:text="${p.idade}"></td>
+	</tr>
+</table>
+
+</body>
+</html>
