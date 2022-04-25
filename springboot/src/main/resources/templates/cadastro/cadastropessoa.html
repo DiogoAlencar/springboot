@@ -1,31 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet" href="materialize/css/materialize.css"  media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+
 </head>
 <body>
 <h1>Cadastro Pessoa</h1>
 <a href="/">Voltar</a>
 
-<form action="salvarpessoa" method="post">
+<form action="salvarpessoa" method="post" th:object="${pessoaObj}">
+	<label>Id:</label>
+	<input type="text" name="nome" th:field="*{id}" readonly="readonly"/><br>
 	<label>Nome</label>
-	<input type="text" name="nome"/><br>
+	<input type="text" name="nome" th:field="*{nome}"/><br>
 	<label>Sobrenome</label>
-	<input type="text" name="sobrenome"/><br>
+	<input type="text" name="sobrenome" th:field="*{sobrenome}"/><br>
 	<label>Idade</label>
-	<input type="text" name="idade"/><br>
-	<input type="submit" value="Salvar">
+	<input type="text" name="idade" th:field="*{idade}"/><br>
+	<input class="waves-effect waves-light btn" type="submit" value="Salvar">
 </form>
 
+<a href="listapessoas">Listar Pessoas</a>
 
 <table>
 	<tr th:each="p : ${pessoas}">
 		<td th:text="${p.nome}"></td>
 		<td th:text="${p.sobrenome}"></td>
 		<td th:text="${p.idade}"></td>
+		<td><a th:href="@{editarpessoa/{idpessoa}(idpessoa=${p.id})}">Editar</a></td>
 	</tr>
 </table>
 
+
+<!--JavaScript at end of body for optimized loading-->
+<script type="text/javascript" src="materialize/js/materialize.js"></script>
+<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
 </body>
 </html>
