@@ -7,8 +7,8 @@
 <!--Import Google Icon Font-->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <!--Import materialize.css-->
-<link type="text/css" rel="stylesheet" href="materialize/css/materialize.css"  media="screen,projection"/>
-<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
 
 </head>
 <body>
@@ -34,7 +34,8 @@
 		<td th:text="${p.nome}"></td>
 		<td th:text="${p.sobrenome}"></td>
 		<td th:text="${p.idade}"></td>
-		<td><a th:href="@{editarpessoa/{idpessoa}(idpessoa=${p.id})}">Editar</a></td>
+		<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${p.id})}">Editar</a></td>
+		<td><a th:href="@{/excluirpessoa/{idpessoa}(idpessoa=${p.id})}">Excluir</a></td>
 	</tr>
 </table>
 
