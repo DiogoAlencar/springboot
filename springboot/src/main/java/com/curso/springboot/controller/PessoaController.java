@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -25,22 +27,60 @@ public class PessoaController {
 	public ModelAndView inicio() {
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 		modelAndView.addObject("pessoaObj", new Pessoa());
+		modelAndView.addObject("pessoas", pessoaRepository.findAll());
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "*/salvarpessoa", method = RequestMethod.POST)
+	@RequestMapping(value = "/salvarpessoa", method = RequestMethod.POST)
 	public ModelAndView salvar(Pessoa pessoa) {
 		
-		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa"); 
-		try {
-			
-			pessoaRepository.save(pessoa); 
+		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+		if (pessoa != null) {
+			try {
+				
+				pessoaRepository.save(pessoa); 
+				Iterable<Pessoa> pessoasIt = pessoaRepository.findAll(); 
+				modelAndView.addObject("pessoas", pessoasIt);
+				modelAndView.addObject("pessoaObj", new Pessoa()); 
+				return modelAndView;
+				
+			} catch (Exception e) {
+				Iterable<Pessoa> pessoasIt = pessoaRepository.findAll(); 
+				modelAndView.addObject("pessoas", pessoasIt);
+				modelAndView.addObject("pessoaObj", new Pessoa()); 
+				return modelAndView;
+			}
+		} else {
 			Iterable<Pessoa> pessoasIt = pessoaRepository.findAll(); 
 			modelAndView.addObject("pessoas", pessoasIt);
 			modelAndView.addObject("pessoaObj", new Pessoa()); 
 			return modelAndView;
-			
-		} catch (Exception e) {
+		}
+		
+	}
+	
+	@RequestMapping(value = "*/salvarpessoa", method = RequestMethod.POST)
+	public ModelAndView salvarEditar(Pessoa pessoa) {
+		
+		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+		if (pessoa != null) {
+			try {
+				
+				pessoaRepository.save(pessoa); 
+				Iterable<Pessoa> pessoasIt = pessoaRepository.findAll(); 
+				modelAndView.addObject("pessoas", pessoasIt);
+				modelAndView.addObject("pessoaObj", new Pessoa()); 
+				return modelAndView;
+				
+			} catch (Exception e) {
+				Iterable<Pessoa> pessoasIt = pessoaRepository.findAll(); 
+				modelAndView.addObject("pessoas", pessoasIt);
+				modelAndView.addObject("pessoaObj", new Pessoa()); 
+				return modelAndView;
+			}
+		} else {
+			Iterable<Pessoa> pessoasIt = pessoaRepository.findAll(); 
+			modelAndView.addObject("pessoas", pessoasIt);
 			modelAndView.addObject("pessoaObj", new Pessoa()); 
 			return modelAndView;
 		}
@@ -87,6 +127,14 @@ public class PessoaController {
 			modelAndView.addObject("pessoaObj", new Pessoa());
 			return modelAndView;
 		}
+	}
+	
+	@PostMapping("/pesquisarpessoa")
+	public ModelAndView pesquisar(@RequestParam("buscarnome") String buscarnome) {
+		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+		modelAndView.addObject("pessoas", pessoaRepository.findPessoaByName(buscarnome));
+		modelAndView.addObject("pessoaObj", new Pessoa());
+		return modelAndView;
 	}
 	
 }

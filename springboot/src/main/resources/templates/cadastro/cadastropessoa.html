@@ -10,26 +10,67 @@
 <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
 <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
 
+<style type="text/css">
+table>thead>tr>td {
+	color: red;
+	font-weight: bold;
+}
+input[type=submit]{
+	color: white;
+}
+</style>
+
 </head>
 <body>
-<h1>Cadastro Pessoa</h1>
+<h3>Spring Boot + Thymeleaf + Material Design Lite</h3>
 <a href="/">Voltar</a>
+<br>
 
-<form action="salvarpessoa" method="post" th:object="${pessoaObj}">
-	<label>Id:</label>
-	<input type="text" name="nome" th:field="*{id}" readonly="readonly"/><br>
-	<label>Nome</label>
-	<input type="text" name="nome" th:field="*{nome}"/><br>
-	<label>Sobrenome</label>
-	<input type="text" name="sobrenome" th:field="*{sobrenome}"/><br>
-	<label>Idade</label>
-	<input type="text" name="idade" th:field="*{idade}"/><br>
+
+<form action="salvarpessoa" id="formpessoa" method="post" th:object="${pessoaObj}">
+	<div class="row">
+	<div class="input-field col s6">
+	<label class="active">ID</label>
+	<input type="text" name="nome" th:field="*{id}" readonly="readonly" class="validate"/>
+	</div>
+	<div class="input-field col s6">
+	<label class="active">Nome</label>
+	<input type="text" name="nome" th:field="*{nome}" class="validate"/>
+	</div>
+	</div>
+	<div class="row">
+	<div class="input-field col s6">
+	<label class="active">Sobrenome</label>
+	<input type="text" name="sobrenome" th:field="*{sobrenome}" class="validate"/>
+	</div>
+	<div class="input-field col s6">
+	<label class="active">Idade</label>
+	<input type="text" name="idade" th:field="*{idade}" class="validate"/>
+	</div>
+	</div>
 	<input class="waves-effect waves-light btn" type="submit" value="Salvar">
+	<button class="waves-effect waves-light btn" onclick="document.getElementById('formpessoa').reset();">Novo</button>
+</form>
+<br>
+
+<br>
+
+<form action="pesquisarpessoa" method="post">
+	<label>Pesquisar Nome</label>
+	<input type="text" name="buscarnome">
+	<input class="waves-effect waves-light btn" type="submit" value="Pesquisar">
 </form>
 
-<a href="listapessoas">Listar Pessoas</a>
-
-<table>
+<table class="striped">
+<thead>
+ <tr>
+  <td>Nome</td>
+  <td>Sobrenome</td>
+  <td>Idade</td>
+  <td>Editar</td>
+  <td>Excluir</td>
+ </tr>
+</thead>
 	<tr th:each="p : ${pessoas}">
 		<td th:text="${p.nome}"></td>
 		<td th:text="${p.sobrenome}"></td>
