@@ -26,30 +26,34 @@ input[type=submit]{
 <a href="/">Voltar</a>
 <br>
 
+<div th:each = "m : ${msg}">
+	<span th:text="${m}"></span>
+</div>
 
-<form action="salvarpessoa" id="formpessoa" method="post" th:object="${pessoaObj}">
+<br>
+<form th:action="@{/salvarpessoa}" id="formpessoa" method="post" th:object="${pessoaObj}">
 	<div class="row">
-	<div class="input-field col s6">
-	<label class="active">ID</label>
-	<input type="text" name="nome" th:field="*{id}" readonly="readonly" class="validate"/>
-	</div>
-	<div class="input-field col s6">
-	<label class="active">Nome</label>
-	<input type="text" name="nome" th:field="*{nome}" class="validate"/>
-	</div>
+		<div class="input-field col s6">
+			<label class="active">ID</label>
+			<input type="text" name="nome" th:field="*{id}" readonly="readonly" class="validate"/>
+		</div>
+		<div class="input-field col s6">
+			<label class="active">Nome</label>
+			<input type="text" name="nome" th:field="*{nome}" class="validate"/>
+		</div>
 	</div>
 	<div class="row">
-	<div class="input-field col s6">
-	<label class="active">Sobrenome</label>
-	<input type="text" name="sobrenome" th:field="*{sobrenome}" class="validate"/>
-	</div>
-	<div class="input-field col s6">
-	<label class="active">Idade</label>
-	<input type="text" name="idade" th:field="*{idade}" class="validate"/>
-	</div>
+		<div class="input-field col s6">
+			<label class="active">Sobrenome</label>
+			<input type="text" name="sobrenome" th:field="*{sobrenome}" class="validate"/>
+		</div>
+		<div class="input-field col s6">
+			<label class="active">Idade</label>
+			<input type="text" name="idade" th:field="*{idade}" class="validate"/>
+		</div>
 	</div>
 	<input class="waves-effect waves-light btn" type="submit" value="Salvar">
-	<button class="waves-effect waves-light btn" onclick="document.getElementById('formpessoa').reset();">Novo</button>
+	<a href="/cadastropessoa" class="waves-effect waves-light btn">Novo</a>
 </form>
 <br>
 
@@ -72,7 +76,7 @@ input[type=submit]{
  </tr>
 </thead>
 	<tr th:each="p : ${pessoas}">
-		<td th:text="${p.nome}"></td>
+		<td><a th:href="@{/telefones/{idpessoa}(idpessoa=${p.id})}"><span th:text="${p.nome}"></span></a></td>
 		<td th:text="${p.sobrenome}"></td>
 		<td th:text="${p.idade}"></td>
 		<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${p.id})}">Editar</a></td>

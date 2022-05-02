@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
+
+<style type="text/css">
+table>thead>tr>td {
+	color: red;
+	font-weight: bold;
+}
+input[type=submit]{
+	color: white;
+}
+.alinha-direita {
+	text-align: right;
+	font-weight: bold;
+}
+</style>
+
+</head>
+<body>
+<h3>Spring Boot + Thymeleaf + Material Design Lite</h3>
+<br>
+<a href="/cadastropessoa" class="waves-effect waves-light btn">Voltar</a>
+<br>
+<div th:each="p : ${pessoaObj}">
+ <div class="row">
+ 	<div class="col s3 alinha-direita">
+	 	<p>ID: <span th:text="${p.id}"></span></p>
+	 	<p>Nome: <span th:text="${p.nome}"></span></p>
+	 	<p>Sobrenome: <span th:text="${p.sobrenome}"></span></p>
+	 	<p>Idade: <span th:text="${p.idade}"></span></p>
+ 	</div>
+ 	<div class="col s9">
+ 		<form th:action="@{/addtelefones/{idpessoa}(idpessoa=${pessoaObj.id})}" method="post">
+ 			<div class="row">
+	 			<div class="col s6">
+	 				<label for="numero" class="active">Número</label>
+	 				<input type="text" name="numero" id="numero" class="validate">
+	 			</div>
+	 			<div class="col s6">
+	 				<label for="tipo" class="active">Tipo</label>
+	 				<input type="text" name="tipo" id="tipo" class="validate">
+	 			</div>
+ 			</div>
+ 			<input type="submit" value="Salvar" class="waves-effect waves-light btn">
+ 		</form>
+ 	</div>
+ </div>
+</div>
+<br><br>
+
+<table class="striped">
+<thead>
+ <tr>
+  <td>Número</td>
+  <td>Tipo</td>
+  <td>Excluir</td>
+ </tr>
+</thead>
+	<tr th:each="t : ${telefones}">
+		<td th:text="${t.numero}"></td>
+		<td th:text="${t.tipo}"></td>
+		<td><a th:href="@{/excluirtelefone/{idtelefone}(idtelefone=${t.id})}">Excluir</a></td>
+	</tr>
+</table>
+
+<!--JavaScript at end of body for optimized loading-->
+<script type="text/javascript" src="materialize/js/materialize.js"></script>
+<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+</body>
+</html>
